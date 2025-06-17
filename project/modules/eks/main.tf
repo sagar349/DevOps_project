@@ -1,7 +1,7 @@
 resource "aws_iam_role" "cluster" {
   name = "${var.cluster_name}-cluster-role"
 
-  assume_role_policy = jsonencode({
+  assume_role_policy = jsonencode({ # this block is for only eks service
     Version = "2012-10-17"
     Statement = [{
       Action = "sts:AssumeRole"
@@ -15,7 +15,7 @@ resource "aws_iam_role" "cluster" {
 
 resource "aws_iam_role_policy_attachment" "cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.cluster.name
+  role       = aws_iam_role.cluster.name # this block is to attach the policy to the role
 }
 
 resource "aws_eks_cluster" "main" {
